@@ -1,1 +1,166 @@
-<p>In progress</p>
+<html>
+  <head>
+    <style type="text/css">
+      * {
+      font-size: 18px;
+      font-family: sans-serif;
+      }
+
+      button {
+      padding: 0.2rem 0.5rem;
+      }
+
+      label {
+      padding: 0.2rem;
+      }
+
+      button, label, input {
+      font-weight: bold;
+      cursor: pointer;
+      }
+
+      .input-group {
+      display: flex;
+      padding: 1rem 0.5rem;
+      gap: 0.5rem;
+      }
+
+      .vertical {
+        flex-direction: column;
+      }
+
+      img {
+        margin: 1rem;
+      }
+
+      .hide {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="input-group">
+      <button id="previous">
+        Previous
+      </button>
+      <button id="next">
+        Next
+      </button>
+    </div>
+
+    <div class="input-group vertical" id="options">
+      <label>
+        Option 1
+        <input name="option" type="radio" id="option-1" checked>
+      </label>
+
+
+      <label>
+        Option 2
+        <input name="option" type="radio" id="option-2">
+      </label>
+
+
+      <label>
+        Option 3
+        <input name="option" type="radio" id="option-3">
+      </label>
+
+
+      <label>
+        Option 4
+        <input name="option" type="radio" id="option-4">
+      </label>
+    </div>
+
+    <img id="image">
+
+    <script type="text/javascript">
+      let option = 1;
+      let design = 1;
+
+      const group = "a";
+      const optionOrder = {
+        "a": [1, 2, 3, 4],
+        "b": [4, 1, 2, 3],
+      };
+
+      const lastDesignIndex = 6;
+
+      const image    = document.getElementById('image');
+      const option1  = document.getElementById('option-1');
+      const option2  = document.getElementById('option-2');
+      const option3  = document.getElementById('option-3');
+      const option4  = document.getElementById('option-4');
+      const previous = document.getElementById('previous');
+      const next     = document.getElementById('next');
+
+      const updatePage = () => {
+        if (design === 6) {
+          image.src = 'images/colors.svg';
+          document.getElementById('options').classList.add('hide');
+        } else {
+          image.src =
+            `images/${optionOrder[group][option - 1]}/${design}.svg`;
+          document.getElementById('options').classList.remove('hide');
+        }
+
+        switch (design) {
+          case 1:
+            previous.setAttribute('disabled', true);
+            next.removeAttribute('disabled');
+            break;
+          case lastDesignIndex:
+            next.setAttribute('disabled', true);
+            previous.removeAttribute('disabled');
+            break;
+          default:
+            next.removeAttribute('disabled');
+            previous.removeAttribute('disabled');
+        }
+      }
+
+      const clickEvent = ({target}) => {
+        const resetOption = () => {
+          option = 1;
+          option1.checked = true;
+          option2.checked = false;
+          option3.checked = false;
+          option4.checked = false;
+        };
+
+        switch (target.id) {
+          case 'previous':
+            design = Math.max(1, design - 1);
+            resetOption()
+            break;
+
+          case 'next':
+            design = Math.min(lastDesignIndex, design + 1);
+            resetOption()
+            break;
+
+          default:
+            option =
+              option1.checked ? 1 :
+              option2.checked ? 2 :
+              option3.checked ? 3 :
+              option4.checked ? 4 :
+              1;
+        };
+
+        updatePage();
+      };
+
+      option1.addEventListener('click', clickEvent);
+      option2.addEventListener('click', clickEvent);
+      option3.addEventListener('click', clickEvent);
+      option4.addEventListener('click', clickEvent);
+      previous.addEventListener('click', clickEvent);
+      next.addEventListener('click', clickEvent);
+
+      updatePage();
+    </script>
+  </body>
+</html>
