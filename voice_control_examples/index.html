@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <style type="text/css">
+      * {
+        font-family: sans-serif;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav {
+        background-color: #222;
+        padding: 1em 0;
+      }
+
+      main {
+        background-color: #fff;
+        padding: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      button {
+        padding: 1em 2em;
+      }
+
+      img {
+        width: 25px;
+        height: 25px;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+      }
+
+      nav a,
+      nav a:hover,
+      nav a:active,
+      nav a:visited {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      li {
+        list-style: none;
+        position: relative;
+        display: flex;
+        align-content: stretch;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      li:first-child {
+        margin-bottom: 1.5em;
+      }
+
+      li:last-child {
+        margin-top: 1.5em;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.5em 1.5em 0.5em;
+        min-width: max-content;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .wrapper {
+        display: flex;
+        min-height: 100%;
+        align-content: stretch;
+        align-items: stretch;
+        justify-content: space-between;
+      }
+    </style>
+
+    <!--
+      Icons from the open source library at remixicon.com
+    -->
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <nav>
+        <ul>
+          <li>
+            <a href="#" aria-label="Hide Menu">
+              <img src="icons/menu-line.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Dashboard">
+              <img src="icons/line-chart-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Policies">
+              <img src="icons/shield-check-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Users">
+              <img src="icons/user-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Groups">
+              <img src="icons/group-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Endpoints">
+              <img src="icons/computer-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="2FA Devices">
+              <img src="icons/device-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Reports">
+              <img src="icons/article-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Settings">
+              <img src="icons/settings-3-fill.svg" role="presentation">
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="mhamilton36">
+              <img src="icons/account-box-fill.svg" role="presentation">
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <main>
+        <button id="swap-button">
+          Swap navigation interface
+        </button>
+      </main>
+    </div>
+
+    <script type="text/javascript">
+      let labeled = false;
+
+      const LINKS = Array.from(document.querySelectorAll("a"));
+
+      const swapUI = () => {
+        LINKS.forEach((link) => {
+          if (labeled) {
+            const label = link.textContent.trim();
+            link.setAttribute("aria-label", label);
+            link.lastChild.textContent = "";
+          } else {
+            const label = link.getAttribute("aria-label").trim();
+            console.log(label)
+            link.lastChild.textContent = label;
+            link.removeAttribute("aria-label");
+          }
+        });
+        labeled = !labeled;
+      };
+
+      document
+        .getElementById("swap-button")
+        .addEventListener("click", swapUI);
+    </script>
+  </body>
+</html>
