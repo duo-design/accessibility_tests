@@ -13,13 +13,19 @@
         padding: 1em 0;
       }
 
+      h1 {
+        font-size: 2rem;
+      }
+
       main {
         background-color: #fff;
         padding: 2em;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: flex-start;
         width: 100%;
+        flex-direction: column;
+        gap: 2rem;
       }
 
       button {
@@ -144,6 +150,8 @@
       </nav>
 
       <main>
+        <h1 id="heading">Navigation Test</h1>
+
         <button id="swap-button">
           Swap navigation interface
         </button>
@@ -171,9 +179,18 @@
         labeled = !labeled;
       };
 
+      const changeHeaderFunc = (header) => () => {
+        document.getElementById("heading").textContent = header;
+      };
+
       document
         .getElementById("swap-button")
         .addEventListener("click", swapUI);
+
+      LINKS.forEach((link) => {
+        const header = link.getAttribute("aria-label")
+        link.addEventListener("click", changeHeaderFunc(header));
+      });
     </script>
   </body>
 </html>
